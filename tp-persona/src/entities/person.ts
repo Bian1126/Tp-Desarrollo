@@ -7,11 +7,15 @@ export class Person {
   id: number;
 
   @Column()
-  firstName: string;
+  name: string; // Cambiar de firstName/lastName a name
 
   @Column()
-  lastName: string;
+  email: string;
 
-  @ManyToOne(() => City, city => city.persons)
+  @Column({ type: 'date' })
+  birthDate: string;
+
+  @ManyToOne(() => City, city => city.persons, { nullable: false })
   city: City;
 }
+

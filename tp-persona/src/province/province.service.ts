@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Province } from '../entities/province';
 import { Repository } from 'typeorm';
-import { paginate, Pagination, IPaginationOptions, IPaginationMeta } from 'nestjs-typeorm-paginate';
-
+import { Province } from '../entities/province';
+import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class ProvinceService {
@@ -11,33 +10,49 @@ export class ProvinceService {
     @InjectRepository(Province)
     private readonly repo: Repository<Province>,
   ) {}
-  
+
   paginate(options: IPaginationOptions): Promise<Pagination<Province>> {
     return paginate<Province>(
       this.repo.createQueryBuilder('province')
-      .leftJoinAndSelect('province.country', 'country'),
+        .leftJoinAndSelect('province.country', 'country'),
       options
     );
   }
 
-
-
-  findOne(id: number) {
-    return this.repo.findOne({ where: { id }, relations: ['country'] });
+  async findOne(id: number) {
+    const province = await this.repo.findOne({
+      where: { id },
+      relations: ['country'],
+    });
+    if (!province) return null;
+    return {
+      id: province.id,
+      name: province.name,
+      country: {
+        id: province.country.id,
+        name: province.country.name,
+      },
+    };
   }
 
-  create(data: Partial<Province>) {
-    return this.repo.save(this.repo.create(data));
+  async create(data: Partial<Province>) {
+    const province = await this.repo.save(this.repo.create(data));
+    return this.findOne(province.id);
   }
 
   async update(id: number, data: Partial<Province>) {
-    const entity = await this.findOne(id);
-    return this.repo.save({ ...entity, ...data });
+    const entity = await this.repo.findOne({ where: { id } });
+    if (!entity) return null;
+    await this.repo.save({ ...entity, ...data });
+    return this.findOne(id);
   }
 
   async remove(id: number) {
-    const entity = await this.findOne(id);
-    if(entity)
-    return this.repo.remove(entity);
+    const entity = await this.repo.findOne({ where: { id } });
+    if (entity) {
+      await this.repo.remove(entity);
+      return { message: 'deleted' };
+    }
+    return null;
   }
 }

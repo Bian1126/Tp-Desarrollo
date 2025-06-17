@@ -10,34 +10,54 @@ export class CityService {
     @InjectRepository(City)
     private readonly repo: Repository<City>,
   ) {}
-  
+
   paginate(options: IPaginationOptions): Promise<Pagination<City>> {
     return paginate<City>(
       this.repo.createQueryBuilder('city')
-      .leftJoinAndSelect('city.province', 'province')
-      .leftJoinAndSelect('province.country', 'country'),
+        .leftJoinAndSelect('city.province', 'province')
+        .leftJoinAndSelect('province.country', 'country'),
       options
     );
   }
 
-  findOne(id: number) {
-    return this.repo.findOne({
+  async findOne(id: number) {
+    const city = await this.repo.findOne({
       where: { id },
       relations: ['province', 'province.country'],
     });
+    if (!city) return null;
+    return {
+      id: city.id,
+      name: city.name,
+      province: {
+        id: city.province.id,
+        name: city.province.name,
+        country: {
+          id: city.province.country.id,
+          name: city.province.country.name,
+        },
+      },
+    };
   }
 
-  create(data: Partial<City>) {
-    return this.repo.save(this.repo.create(data));
+  async create(data: Partial<City>) {
+    const city = await this.repo.save(this.repo.create(data));
+    return this.findOne(city.id);
   }
 
   async update(id: number, data: Partial<City>) {
-    const entity = await this.findOne(id);
-    return this.repo.save({ ...entity, ...data });
+    const entity = await this.repo.findOne({ where: { id } });
+    if (!entity) return null;
+    await this.repo.save({ ...entity, ...data });
+    return this.findOne(id);
   }
 
   async remove(id: number) {
-    const entity = await this.findOne(id);
-    if (entity) return this.repo.remove(entity);
+    const entity = await this.repo.findOne({ where: { id } });
+    if (entity) {
+      await this.repo.remove(entity);
+      return { message: 'deleted' };
+    }
+    return null;
   }
 }

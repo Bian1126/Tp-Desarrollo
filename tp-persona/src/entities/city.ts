@@ -10,7 +10,7 @@ export class City {
   @Column()
   name: string;
   
-  @ManyToOne(() => Province, province => province.cities)
+  @ManyToOne(() => Province, province => province.cities, { nullable: false })
   province: Province;
 
   @OneToMany(() => Person, person => person.city)
