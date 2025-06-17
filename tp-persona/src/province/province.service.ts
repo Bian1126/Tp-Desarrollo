@@ -34,8 +34,10 @@ export class ProvinceService {
       },
     };
   }
-
   async create(data: Partial<Province>) {
+    if (typeof data.country === 'number') {
+      data.country = { id: data.country } as any;
+    }
     const province = await this.repo.save(this.repo.create(data));
     return this.findOne(province.id);
   }
