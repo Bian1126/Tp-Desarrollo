@@ -1,0 +1,32 @@
+<div class="main-bg">
+  <div class="header-bg">
+    <h2 class="titulo-form">Modificar mis datos personales</h2>
+  </div>
+  <div class="form-content">
+    <div class="form-section">
+      <form (ngSubmit)="guardar()">
+        <label class="label-form">¿Cómo te llamás?</label>
+        <input class="input-form" type="text" placeholder="Nombre" [(ngModel)]="nombre" name="nombre" required />
+
+        <label class="label-form">¿Cuándo naciste?</label>
+        <input class="input-form" type="text" placeholder="DD/MM/AAAA" [(ngModel)]="fechaNacimiento" name="fechaNacimiento" required />
+
+        <label class="label-form">¿Cual es tu e-mail?</label>
+        <input class="input-form" type="email" placeholder="E-mail" [(ngModel)]="email" name="email" required />
+
+        <div *ngIf="error" style="color: red;">{{ error }}</div>
+        <button class="btn-form" type="submit">Guardar datos</button>
+      </form>
+    </div>
+    <div class="img-section">
+      <img src="assets/burger.svg" class="icon-food" />
+      <img src="assets/taco.svg" class="icon-food" />
+      <img src="assets/cupcake.svg" class="icon-food" />
+      <img src="assets/empanada.svg" class="icon-food" />
+      <img src="assets/pizza.svg" class="icon-food" />
+      <img src="assets/hotdog.svg" class="icon-food" />
+      <img src="assets/fries.svg" class="icon-food" />
+      <img src="assets/icecream.svg" class="icon-food" />
+    </div>
+  </div>
+</div>

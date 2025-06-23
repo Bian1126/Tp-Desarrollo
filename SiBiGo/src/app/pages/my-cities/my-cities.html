@@ -1,0 +1,14 @@
+<div class="cities-content">
+  <ng-container *ngFor="let ciudad of ciudades; let last = last">
+    <div class="city-row">
+      <span class="city-icon">&#128205;</span>
+      <span class="city-name">{{ ciudad.name }}, {{ ciudad.province?.name }}, {{ ciudad.province?.country?.name }}</span>
+      <span class="city-menu">⋮</span>
+    </div>
+    <hr *ngIf="!last">
+  </ng-container>
+  <div class="d-flex justify-content-between align-items-center mt-4">
+    <button class="btn-form cities-btn" (click)="agregarCiudad()">Agregar Ciudad</button>
+    <button class="btn-form cities-btn" disabled>Siguiente</button>
+  </div>
+</div>

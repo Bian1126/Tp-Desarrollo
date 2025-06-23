@@ -1,0 +1,40 @@
+<div class="main-bg">
+  <div class="side-logo">
+    <img src="assets/logo-sibigo.png" class="logo-img" alt="Logo SiBiGo">
+    <div class="iconos-food">
+      <img src="assets/burger.svg" class="icon-food" />
+      <img src="assets/taco.svg" class="icon-food" />
+      <img src="assets/cupcake.svg" class="icon-food" />
+      <img src="assets/empanada.svg" class="icon-food" />
+      <img src="assets/pizza.svg" class="icon-food" />
+      <img src="assets/hotdog.svg" class="icon-food" />
+      <img src="assets/fries.svg" class="icon-food" />
+      <img src="assets/icecream.svg" class="icon-food" />
+    </div>
+  </div>
+  <div class="login-content">
+    <h2 class="titulo-form">Registro Persona</h2>
+    <form (ngSubmit)="registrar()">
+      <label class="label-form">Nombre</label>
+      <input class="input-form" type="text" [(ngModel)]="nombre" name="nombre" required />
+
+      <label class="label-form">E- Mail</label>
+      <input class="input-form" type="email" [(ngModel)]="email" name="email" required />
+
+      <label class="label-form">Fecha Nacimiento</label>
+      <input class="input-form" type="text" [(ngModel)]="fechaNacimiento" name="fechaNacimiento" placeholder="DD/MM/AAAA" required />
+
+      <label class="label-form">Ciudad</label>
+      <select class="input-form" [(ngModel)]="city" name="ciudad" required>
+        <option value="" disabled selected>Seleccioná una ciudad</option>
+        <option *ngFor="let c of ciudadesCordoba" [value]="c.id">{{ c.name }}</option>
+      </select>
+
+      <div *ngIf="error" style="color: red;">{{ error }}</div>
+      <button class="btn-form" type="submit">Crear cuenta</button>
+    </form>
+    <div class="text-center mt-2">
+      <a href="/login" class="link-registro">¿Ya tenes cuenta? Iniciar sesión</a>
+    </div>
+  </div>
+</div>

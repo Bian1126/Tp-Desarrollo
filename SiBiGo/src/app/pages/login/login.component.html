@@ -1,0 +1,44 @@
+<div class="main-bg">
+  <div class="side-logo">
+    <img src="assets/logo-sibigo.png" class="logo-img" alt="Logo SiBiGo">
+    <div class="iconos-food">
+      <img src="assets/burger.svg" class="icon-food" />
+      <img src="assets/taco.svg" class="icon-food" />
+      <img src="assets/cupcake.svg" class="icon-food" />
+      <img src="assets/empanada.svg" class="icon-food" />
+      <img src="assets/pizza.svg" class="icon-food" />
+      <img src="assets/hotdog.svg" class="icon-food" />
+      <img src="assets/fries.svg" class="icon-food" />
+      <img src="assets/icecream.svg" class="icon-food" />
+    </div>
+        <div class="login-container">
+      <h2>Iniciar sesión</h2>
+      <form (ngSubmit)="login()">
+        <div>
+          <input
+            type="email"
+            placeholder="Email"
+            [(ngModel)]="email"
+            name="email"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            placeholder="Contraseña"
+            [(ngModel)]="password"
+            name="password"
+            required
+          />
+        </div>
+        <div *ngIf="error" style="color: red;">{{ error }}</div>
+        <button type="submit">Iniciar sesión</button>
+      </form>
+      <p>
+        ¿No tienes cuenta?
+        <a href="/register" (click)="goToRegister(); $event.preventDefault()">Regístrate aquí</a>
+      </p>
+    </div>
+  </div>
+</div>

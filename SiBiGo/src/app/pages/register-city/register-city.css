@@ -1,0 +1,164 @@
+.main-bg {
+  background: #d94f97;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+.header-bg {
+  background: #f3a6c7;
+  padding: 1.5rem 0.5rem;
+  text-align: center;
+  width: 100%;
+}
+.titulo-form {
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+.login-content, .form-section {
+  background: transparent;
+  margin: auto;
+  width: 100%;
+  max-width: 450px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.input-form, select.input-form {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 20px;
+  border: none;
+  background: #f3a6c7;
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 1.2rem;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+.input-form::placeholder {
+  color: #fff;
+  opacity: 0.7;
+}
+.btn-form {
+  width: 80%;
+  margin: 1.5rem auto 0 auto;
+  display: block;
+  background: #f3a6c7;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  padding: 0.5rem 0;
+  transition: background 0.2s;
+}
+.btn-form:disabled {
+  opacity: 0.5;
+}
+.btn-form:hover:enabled {
+  background: #d94f97;
+  color: #fff;
+}
+.label-form {
+  display: block;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.side-logo {
+  background: #d94f97;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 260px;
+}
+.logo-img {
+  width: 160px;
+  margin-bottom: 2rem;
+}
+.iconos-food {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.icon-food {
+  width: 60px;
+  margin: 0.3rem;
+  filter: brightness(0) invert(1) opacity(0.7);
+}
+.texto-secundario {
+  color: #fff;
+  font-size: 1.1rem;
+}
+.link-registro {
+  color: #fff;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-left: 0.5rem;
+}
+.form-content, .cities-content, .info-content {
+  background: #d94f97;
+  padding: 2rem 3rem;
+  border-radius: 0 0 20px 20px;
+  width: 100%;
+}
+.city-row, .info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  font-size: 1.5rem;
+  margin: 1.2rem 0;
+}
+.city-icon, .info-icon {
+  font-size: 2.2rem;
+  margin-right: 1rem;
+}
+.city-name, .info-title {
+  font-weight: bold;
+}
+.city-menu {
+  font-size: 2rem;
+  margin-left: 1rem;
+}
+.cities-btn {
+  width: 45%;
+  font-size: 1.5rem;
+  margin: 0 0.5rem;
+}
+.info-btn {
+  width: 120px;
+  font-size: 1.2rem;
+  margin-left: 1rem;
+}
+hr {
+  border: 1px solid #fff;
+  opacity: 0.5;
+}
+.back-arrow {
+  font-size: 3rem;
+  color: #fff;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+@media (max-width: 900px) {
+  .main-bg {
+    flex-direction: column;
+  }
+  .side-logo {
+    flex-direction: row;
+    min-width: 0;
+    justify-content: center;
+  }
+  .form-content, .cities-content, .info-content {
+    padding: 1rem;
+  }
+}
