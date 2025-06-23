@@ -39,7 +39,7 @@ npm run start
 ```
 o
 ```
-npm run build
+npm run start:dev 
 ```
 o el comando que corresponda según el proyecto.
 
