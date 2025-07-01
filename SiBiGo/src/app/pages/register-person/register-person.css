@@ -1,106 +1,139 @@
+/* Fondo principal */
 .main-bg {
-  background: #d94f97;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Montserrat', Arial, sans-serif;
-}
-
-.side-logo {
-  background: #d94f97;
-  padding: 2rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 160px;
-  max-width: 200px;
-}
-
-.login-content {
-  background: transparent;
-  margin: auto;
+  position: relative;
   width: 100%;
-  max-width: 340px; /* Más compacto */
-  padding: 2rem 1.5rem;
+  min-height: 100vh;
+  background-color: #e993bf;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Alinea el formulario a la derecha */
+  font-family: 'Montserrat', Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* Imagen de fondo (izquierda) */
+.bg-image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: auto;
+  max-width: 77%;
+  object-fit: contain;
+  z-index: 0;
+}
+
+/* Contenedor del formulario */
+.form-wrapper {
+  position: relative;
+  z-index: 2; /* Sobre la imagen */
+  background: #d81b76;
+  padding: 24px 28px;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 4px 24px #0002;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 20px;
+  max-height: 600px; /* Limita la altura */
+  overflow-y: auto;
+  margin-right: 240px; /* Margen derecho para separarlo del borde */
 }
 
+/* Título */
 .titulo-form {
   color: #fff;
-  font-size: 2rem; /* Más chico */
+  font-size: 1.8rem;
   font-weight: bold;
-  margin-bottom: 1.2rem;
-  background: #d94f97;
-  border-radius: 20px;
-  padding: 0.5rem 1.2rem;
+  text-align: center;
+  margin-bottom: 12px;
 }
 
-.label-form {
-  display: block;
-  color: #fff;
-  font-weight: bold;
-  font-size: 1.1rem;
-  margin-top: 1rem;
-  margin-bottom: 0.3rem;
+/* Botón volver */
+.btn-volver {
+  background: none;
+  border: none;
+  margin-bottom: 12px;
+  cursor: pointer;
   align-self: flex-start;
 }
 
-.input-form, select.input-form {
-  width: 100%;
-  padding: 0.6rem;
-  border-radius: 15px;
-  border: none;
-  background: #f3a6c7;
-  color: #fff;
-  font-size: 1rem;
-  margin-bottom: 0.8rem;
+.btn-volver img {
+  width: 24px;
+  height: 24px;
 }
 
-.input-form::placeholder {
-  color: #fff;
-  opacity: 0.7;
-}
-
-.btn-form {
-  width: 100%;
-  background: #f3a6c7;
-  color: #fff;
-  font-size: 1.3rem;
+/* Etiquetas */
+label {
+  align-self: flex-start;
   font-weight: bold;
+  color: #fff;
+  margin: 6px 0 4px;
+  font-size: 0.9rem;
+}
+
+/* Inputs y selects */
+input,
+select {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 14px;
   border: none;
-  border-radius: 20px;
-  padding: 0.5rem 0;
-  margin-top: 1.2rem;
-  margin-bottom: 0.5rem;
+  font-size: 15px;
+  font-family: inherit;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 6px #0001;
+  color: #e94fa2;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+/* Botón de acción */
+.btn-form {
+  background: #f7b8d3;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 10px 28px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 14px;
+  cursor: pointer;
+  width: 100%;
   transition: background 0.2s;
+  box-shadow: 0 3px 10px #0003;
 }
 
-.btn-form:hover {
-  background: #d94f97;
+.btn-form:hover:enabled {
+  background: #f6a7c7;
 }
 
-.text-center {
+/* Mensaje de error */
+.error-msg {
+  color: #fff;
+  background: #d800ff88;
+  border-radius: 10px;
+  padding: 6px 12px;
+  margin-top: 10px;
+  font-size: 0.9rem;
   text-align: center;
 }
 
-@media (max-width: 900px) {
-  .main-bg {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-  }
-  .side-logo {
-    flex-direction: row;
-    min-width: 0;
-    max-width: none;
-    justify-content: center;
-  }
-  .login-content {
-    max-width: 95vw;
-    padding: 1rem;
-  }
+/* Texto debajo del botón */
+.texto-secundario {
+  color: #fff;
+  font-size: 0.95rem;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.link-registro {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: bold;
+  margin-left: 6px;
+  cursor: pointer;
 }

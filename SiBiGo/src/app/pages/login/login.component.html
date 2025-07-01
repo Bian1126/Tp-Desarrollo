@@ -1,44 +1,42 @@
 <div class="main-bg">
-  <div class="side-logo">
-    <img src="assets/logo-sibigo.png" class="logo-img" alt="Logo SiBiGo">
-    <div class="iconos-food">
-      <img src="assets/burger.svg" class="icon-food" />
-      <img src="assets/taco.svg" class="icon-food" />
-      <img src="assets/cupcake.svg" class="icon-food" />
-      <img src="assets/empanada.svg" class="icon-food" />
-      <img src="assets/pizza.svg" class="icon-food" />
-      <img src="assets/hotdog.svg" class="icon-food" />
-      <img src="assets/fries.svg" class="icon-food" />
-      <img src="assets/icecream.svg" class="icon-food" />
-    </div>
-        <div class="login-container">
-      <h2>Iniciar sesión</h2>
-      <form (ngSubmit)="login()">
-        <div>
-          <input
-            type="email"
-            placeholder="Email"
-            [(ngModel)]="email"
-            name="email"
-            required
-          />
-        </div>
-        <div>
-          <input
-            type="password"
-            placeholder="Contraseña"
-            [(ngModel)]="password"
-            name="password"
-            required
-          />
-        </div>
-        <div *ngIf="error" style="color: red;">{{ error }}</div>
-        <button type="submit">Iniciar sesión</button>
-      </form>
-      <p>
+  <!-- Imagen de fondo decorativa -->
+  <img src="assets/fondo-logo2.png" class="bg-image" alt="Fondo decorativo" />
+
+  <!-- Contenedor del formulario con logo superior -->
+  <div class="form-wrapper">
+    <!-- Logo centrado arriba -->
+    
+
+    <!-- Formulario de login -->
+    <form class="login-form" (ngSubmit)="login()">
+      <h2 class="titulo-form">Iniciar sesión</h2>
+
+      <input
+        type="email"
+        placeholder="Correo electrónico"
+        [(ngModel)]="email"
+        name="email"
+        class="input-form"
+        required
+      />
+      <input
+        type="password"
+        placeholder="Contraseña"
+        [(ngModel)]="password"
+        name="password"
+        class="input-form"
+        required
+      />
+
+      <div *ngIf="error" class="error-msg">{{ error }}</div>
+
+      <button type="submit" class="btn-form">Iniciar sesión</button>
+
+      <div class="texto-secundario">
         ¿No tienes cuenta?
-        <a href="/register" (click)="goToRegister(); $event.preventDefault()">Regístrate aquí</a>
-      </p>
-    </div>
+        <a class="link-registro" href="/register-person">Regístrate aquí</a>
+      </div>
+    </form>
   </div>
 </div>
+

@@ -2,13 +2,11 @@
   <img src="assets/fondo_registrar_persona.png" class="bg-image" alt="Fondo decorativo" />
 
   <div class="form-wrapper">
-    <h2 class="titulo-form">Registro Persona</h2>
-
+    <h2 class="titulo-form">Agregar persona</h2>
     <button class="btn-volver" (click)="volver()">
       <img src="assets/volver.png" alt="Volver" />
     </button>
-
-    <form (ngSubmit)="registrar()">
+    <form (ngSubmit)="agregarPersona()">
       <label>Nombre</label>
       <input type="text" [(ngModel)]="nombre" name="nombre" required />
 
@@ -25,14 +23,7 @@
       </select>
 
       <div *ngIf="error" class="error-msg">{{ error }}</div>
-
-      <button type="submit" class="btn-form">Crear cuenta</button>
+      <button type="submit" class="btn-form">Agregar persona</button>
     </form>
-
-    <div class="texto-secundario">
-      ¿Ya tenés cuenta?
-      <a href="/login" class="link-registro">Iniciar sesión</a>
-    </div>
   </div>
 </div>
-

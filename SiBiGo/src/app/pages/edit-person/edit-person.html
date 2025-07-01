@@ -1,32 +1,33 @@
-<div class="main-bg">
-  <div class="header-bg">
-    <h2 class="titulo-form">Modificar mis datos personales</h2>
-  </div>
-  <div class="form-content">
-    <div class="form-section">
+<div class="modificar-bg">
+  <img src="assets/fondo-lista-personas2.png" class="bg-image" alt="Fondo decorativo" />
+
+  <div class="modificar-container">
+    <div class="header">
+      <button class="btn-volver" (click)="volver()">
+        <img src="assets/volver.png" alt="Volver" />
+      </button>
+      <h2>Modificar datos de la persona</h2>
+    </div>
+    <div class="contenido">
       <form (ngSubmit)="guardar()">
-        <label class="label-form">¿Cómo te llamás?</label>
-        <input class="input-form" type="text" placeholder="Nombre" [(ngModel)]="nombre" name="nombre" required />
+        <label>¿Cómo te llamas?</label>
+        <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Nombre" required />
 
-        <label class="label-form">¿Cuándo naciste?</label>
-        <input class="input-form" type="text" placeholder="DD/MM/AAAA" [(ngModel)]="fechaNacimiento" name="fechaNacimiento" required />
+        <label>¿Cuándo naciste?</label>
+        <input type="text" [(ngModel)]="fechaNacimiento" name="fechaNacimiento" placeholder="DD/MM/AAAA" required />
 
-        <label class="label-form">¿Cual es tu e-mail?</label>
-        <input class="input-form" type="email" placeholder="E-mail" [(ngModel)]="email" name="email" required />
+        <label>¿Cual es tu correo electrónico?</label>
+        <input type="email" [(ngModel)]="email" name="email" placeholder="Correo electrónico" required />
 
-        <div *ngIf="error" style="color: red;">{{ error }}</div>
+        <label>Ciudad:</label>
+        <select [(ngModel)]="ciudadSeleccionada" name="ciudad" required>
+          <option value="" disabled selected>Seleccioná una ciudad</option>
+          <option *ngFor="let c of ciudadesCordoba" [value]="c.id">{{ c.name }}</option>
+        </select>
+
         <button class="btn-form" type="submit">Guardar datos</button>
       </form>
-    </div>
-    <div class="img-section">
-      <img src="assets/burger.svg" class="icon-food" />
-      <img src="assets/taco.svg" class="icon-food" />
-      <img src="assets/cupcake.svg" class="icon-food" />
-      <img src="assets/empanada.svg" class="icon-food" />
-      <img src="assets/pizza.svg" class="icon-food" />
-      <img src="assets/hotdog.svg" class="icon-food" />
-      <img src="assets/fries.svg" class="icon-food" />
-      <img src="assets/icecream.svg" class="icon-food" />
+      <img src="assets/logo_barbie.png" class="logo-barbie" alt="Logo" />
     </div>
   </div>
 </div>

@@ -6,6 +6,13 @@ import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginat
 
 @Injectable()
 export class PersonService {
+  async findAllPublic(): Promise<Partial<Person>[]> {
+    const persons = await this.repo.find({
+      select: ['id', 'name'],
+    });
+    return persons;
+  }
+
   constructor(
     @InjectRepository(Person)
     private readonly repo: Repository<Person>,

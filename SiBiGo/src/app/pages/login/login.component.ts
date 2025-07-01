@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { inject } from '@angular/core';
 import axios from 'axios';
 import { CommonModule } from '@angular/common';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -24,8 +25,16 @@ export class LoginComponent {
         email: this.email,
         password: this.password
       });
-      localStorage.setItem('token', response.data.token);
-      this.router.navigate(['/personal-info']);
+      const token = response.data.accessToken;
+      const decodedToken: any = jwtDecode(token);
+      console.log('Token decodificado:', decodedToken);
+      
+      if (decodedToken.email === 'sibigoadmin@mail.com') {
+        localStorage.setItem('token', response.data.accessToken);
+        this.router.navigate(['/person-list']);
+      } else {
+        this.error = 'Solo el administrador puede ingresar';
+      }
     } catch (e: any) {
       this.error = 'Email o contraseña incorrectos';
     }

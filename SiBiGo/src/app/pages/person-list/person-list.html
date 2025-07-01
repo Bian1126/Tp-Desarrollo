@@ -1,0 +1,50 @@
+<div class="main-bg">
+  <img src="assets/fondo-lista-personas2.png" class="bg-image" alt="Fondo decorativo" />
+
+  <div class="form-wrapper">
+    <div class="person-list-container">
+      <button class="btn-volver" (click)="volver()">
+        <img src="assets/volver.png" alt="Volver" />
+      </button>
+
+      <h2>Lista de personas</h2>
+
+      <div *ngFor="let p of personasPaginadas()" class="persona-row">
+        <img src="assets/person.png" class="icon-user" alt="Persona" />
+        <span class="nombre">{{ p.name }}</span>
+        <div class="acciones">
+          <button class="icon-btn edit" (click)="editarPersona(p.id)">
+            <img src="assets/edit.png" class="icon-pencil" alt="Editar" />
+          </button>
+          <button class="icon-btn delete" (click)="confirmarEliminar(p)">
+            <img src="assets/delete.png" class="icon-trash" alt="Eliminar" />
+          </button>
+          <button class="icon-btn view" (click)="verPersona(p.id)">
+            <img src="assets/ver.png" class="icon-eye" alt="Ver" />
+          </button>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div style="text-align: center; margin-top: 20px;">
+        <button class="btn-form btn-agregar-persona" (click)="goToAddPerson()">Agregar persona</button>
+
+        <div style="margin-top: 10px;">
+          <button class="siguiente" [disabled]="paginaActual === 0" (click)="paginaAnterior()">Anterior</button>
+          <button class="siguiente" [disabled]="paginaActual >= totalPaginas() - 1" (click)="paginaSiguiente()">Siguiente</button>
+        </div>
+      </div>
+
+      <!-- Modal de confirmación -->
+      <div *ngIf="showModal" class="modal">
+        <div class="modal-content">
+          <p>¿Estás segura que querés eliminar a <strong>{{ personaAEliminar?.name }}</strong>?</p>
+          <div class="modal-actions">
+            <button class="btn-modal eliminar" (click)="eliminarPersona()">Sí, eliminar</button>
+            <button class="btn-modal cancelar" (click)="cancelarEliminar()">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
