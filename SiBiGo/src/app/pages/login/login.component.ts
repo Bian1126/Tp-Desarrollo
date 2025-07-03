@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { inject } from '@angular/core';
-import axios from 'axios';
+import { AuthService } from '../../services/auth';
 import { CommonModule } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 
@@ -19,18 +19,17 @@ export class LoginComponent {
   password: string = '';
   error: string = '';
 
+  constructor(private authService: AuthService) {}
+
   async login() {
     try {
-      const response = await axios.post('http://localhost:3000/login', { // <-- puerto 3000
-        email: this.email,
-        password: this.password
-      });
-      const token = response.data.accessToken;
+      const data = await this.authService.login(this.email, this.password);
+      const token = data.accessToken;
       const decodedToken: any = jwtDecode(token);
       console.log('Token decodificado:', decodedToken);
-      
+
       if (decodedToken.email === 'sibigoadmin@mail.com') {
-        localStorage.setItem('token', response.data.accessToken);
+        localStorage.setItem('token', token);
         this.router.navigate(['/person-list']);
       } else {
         this.error = 'Solo el administrador puede ingresar';

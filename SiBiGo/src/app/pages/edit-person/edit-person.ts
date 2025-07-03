@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { inject } from '@angular/core';
-import axios from 'axios';
+import { Person } from '../../services/person';
+import { City } from '../../services/city';
 import { CommonModule, Location } from '@angular/common';
 
 @Component({
@@ -24,6 +24,11 @@ export class EditPerson implements OnInit {
   ciudadSeleccionada: string = '';
   idPersona: string = '';
 
+  constructor(
+    private personService: Person,
+    private cityService: City
+  ) {}
+
   volver() {
     this.location.back();
   }
@@ -34,25 +39,14 @@ export class EditPerson implements OnInit {
       const token = localStorage.getItem('token');
 
       // 1. Traer datos de la persona (requiere token)
-      const personaResp = await axios.get(
-        `http://localhost:3001/person/${this.idPersona}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
-
-      this.nombre = personaResp.data.name;
-      this.email = personaResp.data.email;
-      this.fechaNacimiento = personaResp.data.birthDate;
-      this.ciudadSeleccionada = personaResp.data.city.id;
+      const persona = await this.personService.getPerson(this.idPersona, token!);
+      this.nombre = persona.name;
+      this.email = persona.email;
+      this.fechaNacimiento = persona.birthDate;
+      this.ciudadSeleccionada = persona.city.id;
 
       // 2. Traer ciudades desde endpoint público
-      const ciudadesResp = await axios.get('http://localhost:3001/city/public');
-      this.ciudadesCordoba = (ciudadesResp.data.items || []).filter(
-        (c: any) => c.province?.name === 'Córdoba'
-      );
+      this.ciudadesCordoba = await this.cityService.getCiudadesCordobaPublic();
 
     } catch (e) {
       console.error('Error en ngOnInit:', e);
@@ -63,22 +57,16 @@ export class EditPerson implements OnInit {
   async guardar() {
     try {
       const token = localStorage.getItem('token');
-
-      await axios.patch(
-        `http://localhost:3001/person/${this.idPersona}`,
+      await this.personService.updatePerson(
+        this.idPersona,
         {
           name: this.nombre,
           email: this.email,
           birthDate: this.fechaNacimiento,
           cityId: this.ciudadSeleccionada
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+        token!
       );
-
       this.router.navigate(['/personal-info']);
     } catch (e) {
       console.error('Error al guardar:', e);

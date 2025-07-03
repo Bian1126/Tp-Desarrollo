@@ -39,7 +39,7 @@ export class PersonController {
   @Get()
   @UseGuards(PermissionsGuard)
   @Permissions('ver_personas')
-  getAll(@Query('page') page = 1, @Query('quantity') quantity = 10): Promise<Pagination<Person>> {
+  getAll(@Query('page') page = 1, @Query('quantity') quantity = 100): Promise<Pagination<Person>> {
     return this.service.paginate({ page: +page, limit: +quantity });
   }
 

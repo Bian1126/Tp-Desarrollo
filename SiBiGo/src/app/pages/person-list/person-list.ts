@@ -30,7 +30,8 @@ export class PersonListComponent implements OnInit {
   async cargarPersonas() {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:3001/person', {
+      // Pedimos hasta 100 personas (podés aumentar el número si querés)
+      const response = await axios.get('http://localhost:3001/person?page=1&quantity=100', {
         headers: {
           Authorization: `Bearer ${token}`
         }

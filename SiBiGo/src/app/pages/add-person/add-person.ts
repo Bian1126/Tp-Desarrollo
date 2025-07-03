@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import axios from 'axios';
+import { Person } from '../../services/person';
+import { City } from '../../services/city';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -13,8 +14,6 @@ import { Location } from '@angular/common';
   imports: [CommonModule, FormsModule]
 })
 export class AddPerson implements OnInit {
-  
-  
   location = inject(Location);
   volver() {
     this.location.back();
@@ -27,14 +26,15 @@ export class AddPerson implements OnInit {
   ciudadesCordoba: any[] = [];
   error = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private personService: Person,
+    private cityService: City
+  ) {}
 
   async ngOnInit() {
     try {
-      const resp = await axios.get('http://localhost:3001/city');
-      this.ciudadesCordoba = (resp.data.items || []).filter(
-        (c: any) => c.province?.name === 'Córdoba'
-      );
+      this.ciudadesCordoba = await this.cityService.getCiudadesCordoba();
     } catch (e) {
       this.error = 'Error al cargar ciudades';
     }
@@ -52,8 +52,8 @@ export class AddPerson implements OnInit {
         this.error = 'No estás autenticado';
         return;
       }
-      
-       let partes: string[] = [];
+
+      let partes: string[] = [];
       if (this.fechaNacimiento.includes('/')) {
         partes = this.fechaNacimiento.split('/');
       } else if (this.fechaNacimiento.includes('-')) {
@@ -70,15 +70,12 @@ export class AddPerson implements OnInit {
       const payload = {
         name: this.nombre,
         email: this.email,
-        birthDate: this.fechaNacimiento,
+        birthDate: birthDate, // ✅ usar el formato correcto
         city: { id: Number(this.city) }
       };
 
-      console.log('Payload enviado:', payload);
 
-      await axios.post('http://localhost:3001/person', payload, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await this.personService.agregarPersona(payload, token);
 
       this.router.navigate(['/person-list']);
     } catch (e: any) {

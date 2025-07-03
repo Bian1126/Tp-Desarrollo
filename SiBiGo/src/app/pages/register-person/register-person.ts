@@ -1,9 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import axios from 'axios';
+import { Person } from '../../services/person';
+import { City } from '../../services/city';
 import { CommonModule, Location } from '@angular/common';
-import { ParenthesizedExpr } from '@angular/compiler';
 
 @Component({
   selector: 'app-register-person',
@@ -25,16 +25,18 @@ export class RegisterPerson implements OnInit {
 
   modo: 'registro' | 'agregar' = 'registro';
 
+  constructor(
+    private personService: Person,
+    private cityService: City
+  ) {}
+
   volver() {
     this.location.back();
   }
 
   async ngOnInit() {
     try {
-      const response = await axios.get('http://localhost:3001/city/public');
-      this.ciudadesCordoba = (response.data.items || []).filter(
-        (c: any) => c.province?.name === 'Córdoba'
-      );
+      this.ciudadesCordoba = await this.cityService.getCiudadesCordobaPublic();
     } catch (e) {
       console.error('Error al cargar ciudades:', e);
       this.error = 'Error al cargar ciudades';
@@ -48,7 +50,6 @@ export class RegisterPerson implements OnInit {
     }
 
     try {
-      // Permitir tanto / como - como separador
       let partes: string[] = [];
       if (this.fechaNacimiento.includes('/')) {
         partes = this.fechaNacimiento.split('/');
@@ -67,14 +68,13 @@ export class RegisterPerson implements OnInit {
         name: this.nombre,
         email: this.email,
         birthDate,
-        city: { id: Number(this.city) } // en lugar de cityId
-        };
+        city: { id: Number(this.city) }
+      };
 
-
-      console.log('Payload enviado:', payload);
-
-      await axios.post('http://localhost:3001/person/public', payload);
+      await this.personService.registerPublic(payload);
+      
       this.router.navigate(['/']);
+
     } catch (e: any) {
       console.error(e);
       this.error = 'Error al registrar persona';
