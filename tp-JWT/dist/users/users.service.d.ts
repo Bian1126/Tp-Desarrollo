@@ -24,4 +24,13 @@ export declare class UsersService {
     }>;
     findByEmail(email: string): Promise<UserEntity>;
     getPermissions(user: UserEntity): Promise<string[]>;
+    deleteByEmail(email: string): Promise<{
+        status: string;
+    }>;
+    updateByEmail(email: string, data: {
+        email?: string;
+        password?: string;
+    }): Promise<{
+        status: string;
+    }>;
 }

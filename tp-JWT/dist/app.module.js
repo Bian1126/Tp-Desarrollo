@@ -35,7 +35,7 @@ exports.AppModule = AppModule = __decorate([
                 port: 5433,
                 username: 'postgres',
                 password: 'bp21012021',
-                database: 'mybd_desarrollo_bian_persona',
+                database: 'mybd_persona',
                 entities: [user_entity_1.UserEntity, role_entity_1.Role, permission_entity_1.Permission],
                 synchronize: true,
             }),

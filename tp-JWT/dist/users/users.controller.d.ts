@@ -31,4 +31,13 @@ export declare class UsersController {
     }>;
     findAllUsers(): Promise<UserEntity[]>;
     getMyPermissions(req: RequestWithUser): Promise<string[]>;
+    deleteUser(email: string): Promise<{
+        status: string;
+    }>;
+    updateUser(email: string, data: {
+        email?: string;
+        password?: string;
+    }): Promise<{
+        status: string;
+    }>;
 }

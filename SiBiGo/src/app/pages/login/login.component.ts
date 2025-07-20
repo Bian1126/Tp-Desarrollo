@@ -22,22 +22,20 @@ export class LoginComponent {
   constructor(private authService: AuthService) {}
 
   async login() {
-    try {
-      const data = await this.authService.login(this.email, this.password);
-      const token = data.accessToken;
-      const decodedToken: any = jwtDecode(token);
-      console.log('Token decodificado:', decodedToken);
+  try {
+    const data = await this.authService.login(this.email, this.password);
+    const token = data.accessToken;
+    localStorage.setItem('token', token);
 
-      if (decodedToken.email === 'sibigoadmin@mail.com') {
-        localStorage.setItem('token', token);
-        this.router.navigate(['/person-list']);
-      } else {
-        this.error = 'Solo el administrador puede ingresar';
-      }
-    } catch (e: any) {
-      this.error = 'Email o contraseña incorrectos';
-    }
+    // Opcional: guardar el usuario decodificado para usar en otros componentes
+    const decodedToken: any = jwtDecode(token);
+    localStorage.setItem('user', JSON.stringify(decodedToken));
+
+    this.router.navigate(['/person-list']);
+  } catch (e: any) {
+    this.error = 'Email o contraseña incorrectos';
   }
+}
 
   goToRegister() {
     this.router.navigate(['/register']);

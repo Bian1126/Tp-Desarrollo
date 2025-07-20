@@ -1,13 +1,7 @@
 <div class="main-bg">
-  <!-- Imagen de fondo decorativa -->
   <img src="assets/fondo-logo2.png" class="bg-image" alt="Fondo decorativo" />
 
-  <!-- Contenedor del formulario con logo superior -->
   <div class="form-wrapper">
-    <!-- Logo centrado arriba -->
-    
-
-    <!-- Formulario de login -->
     <form class="login-form" (ngSubmit)="login()">
       <h2 class="titulo-form">Iniciar sesión</h2>
 
@@ -16,7 +10,7 @@
         placeholder="Correo electrónico"
         [(ngModel)]="email"
         name="email"
-        class="input-form"
+        class="form-control mb-3 input-form"
         required
       />
       <input
@@ -24,13 +18,13 @@
         placeholder="Contraseña"
         [(ngModel)]="password"
         name="password"
-        class="input-form"
+        class="form-control mb-3 input-form"
         required
       />
 
-      <div *ngIf="error" class="error-msg">{{ error }}</div>
+      <div *ngIf="error" class="alert alert-danger text-center py-2 error-msg">{{ error }}</div>
 
-      <button type="submit" class="btn-form">Iniciar sesión</button>
+      <button type="submit" class="btn btn-primary btn-form w-100">Iniciar sesión</button>
 
       <div class="texto-secundario">
         ¿No tienes cuenta?
@@ -39,4 +33,3 @@
     </form>
   </div>
 </div>
-

@@ -38,23 +38,33 @@ export class Person {
   }
 
   async getAllSinPaginar(token: string) {
-  const response = await axios.get('http://localhost:3001/person/all', {
-    headers: { Authorization: `Bearer ${token}` }
-  });
-  return response.data || [];
-}
+    const response = await axios.get('http://localhost:3001/person/all', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    return response.data || [];
+  }
 
-
-  // Eliminar persona por ID
-  async delete(id: number, token: string) {
-    return await axios.delete(`http://localhost:3001/person/${id}`, {
+  async delete(id: number, token: string, email: string) {
+    // Eliminar en tp-persona
+    await axios.delete(`http://localhost:3001/person/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    // Eliminar en tp-JWT
+    await axios.delete(`http://localhost:3000/user/${email}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
   }
 
   async getPublicPersons() {
-  const resp = await axios.get('http://localhost:3001/person/public');
-  return resp.data || [];
-}
+    const resp = await axios.get('http://localhost:3001/person/public');
+    return resp.data || [];
+  }
+  
+  async updateUserJWT(oldEmail: string, data: any, token: string) {
+    return await axios.patch(`http://localhost:3000/user/${oldEmail}`,
+      data,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+  }
 
 }

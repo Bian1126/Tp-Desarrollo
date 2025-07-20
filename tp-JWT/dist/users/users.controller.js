@@ -23,6 +23,7 @@ const user_entity_1 = require("../entities/user.entity");
 const typeorm_2 = require("typeorm");
 const permissions_decorator_1 = require("../middlewares/decorators/permissions.decorator");
 const permissions_guard_1 = require("../middlewares/guards/permissions.guard");
+const common_2 = require("@nestjs/common");
 let UsersController = class UsersController {
     constructor(service, userRepo) {
         this.service = service;
@@ -56,6 +57,12 @@ let UsersController = class UsersController {
     }
     getMyPermissions(req) {
         return this.service.getPermissions(req.user);
+    }
+    async deleteUser(email) {
+        return this.service.deleteByEmail(email);
+    }
+    async updateUser(email, data) {
+        return this.service.updateByEmail(email, data);
     }
 };
 exports.UsersController = UsersController;
@@ -124,6 +131,25 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getMyPermissions", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, permissions_guard_1.PermissionsGuard),
+    (0, permissions_decorator_1.Permissions)('eliminar_persona'),
+    (0, common_2.Delete)('user/:email'),
+    __param(0, (0, common_1.Param)('email')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "deleteUser", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, permissions_guard_1.PermissionsGuard),
+    (0, permissions_decorator_1.Permissions)('editar_persona'),
+    (0, common_1.Patch)('user/:email'),
+    __param(0, (0, common_1.Param)('email')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "updateUser", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)(''),
     __param(1, (0, typeorm_1.InjectRepository)(user_entity_1.UserEntity)),

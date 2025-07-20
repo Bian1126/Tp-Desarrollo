@@ -31,7 +31,7 @@ html, body {
   width: 100%;
   margin: 0 auto;
   font-family: 'Montserrat', Arial, sans-serif;
-  box-shadow: 0 4px 24px #0002;
+  box-shadow: 0 4px 24px #fff;
   position: relative;
   z-index: 1;
 }
@@ -60,6 +60,7 @@ html, body {
   left: 24px;
   top: 24px;
   cursor: pointer;
+  z-index: 2;
 }
 
 .btn-volver img {
@@ -90,15 +91,17 @@ form {
   max-width: 320px;
 }
 
-form label {
+/* Solo aplica color blanco a los labels que no usan Bootstrap */
+form label:not(.form-label) {
   color: #fff;
   font-weight: bold;
   font-size: 1.2rem;
   margin-bottom: 4px;
 }
 
-form input,
-form select {
+/* Personaliza solo los inputs/selects que no usan Bootstrap */
+form input:not(.form-control),
+form select:not(.form-select) {
   background: #f8b6d6;
   border: none;
   border-radius: 18px;
@@ -115,11 +118,12 @@ form input::placeholder {
   opacity: 0.8;
 }
 
-form select {
+form select:not(.form-select) {
   color: #fff;
 }
 
-.btn-form {
+/* Botón guardar con Bootstrap */
+.btn-primary {
   background: #f8b6d6;
   color: #fff;
   font-size: 1.3rem;
@@ -130,20 +134,21 @@ form select {
   margin-top: 16px;
   cursor: pointer;
   transition: background 0.2s;
-  width: 50%;          
-  align-self: center;   
+  width: 100%;
+  align-self: center;
   margin-right: 0;
 }
-.btn-form:disabled {
+.btn-primary:disabled {
   opacity: 0.5;
 }
 
+/* Logo */
 .logo-barbie {
   position: absolute;
   top: 50%;
-  right: 10px;
-  transform: translateY(-30%);
-  width: 400px;      /* Más grande */
+  right: -20px;
+  transform: translateY(-40%);
+  width: 400px;
   opacity: 0.9;
 }
 

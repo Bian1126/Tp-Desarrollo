@@ -1,40 +1,40 @@
-
 <div class="person-view-bg">
   <img src="assets/fondo-lista-personas2.png" class="bg-image" alt="Fondo decorativo" />
-<div class="info-container" *ngIf="person">
-  <div class="info-header">
-    <h2>Información personal</h2>
-    <button class="btn-volver" (click)="volver()">
-  <img src="assets/volver.png" alt="Volver" />
-</button>
-  </div>
-  <div class="info-card">
-    <div class="info-section">
-      <img src="assets/person.png" class="icon-info" alt="Persona" />
-      <div>
-        <div class="info-title">Mis datos personales</div>
-        <div>{{ person.name }} - {{ person.birthDate | date:'dd/MM/yyyy' }}</div>
-      </div>
+  <div class="info-container" *ngIf="person">
+    <div class="info-header position-relative">
+      <h2>Información personal</h2>
+      <button class="btn btn-light btn-volver position-absolute" (click)="volver()" type="button">
+        <img src="assets/volver.png" alt="Volver" />
+      </button>
     </div>
-
-    <div class="info-section">
-      <img src="assets/location.png" class="icon-info" alt="Ciudad" />
-      <div>
-        <div class="info-title">Ciudad</div>
+    <div class="info-card">
+      <div class="info-section">
+        <img src="assets/person.png" class="icon-info" alt="Persona" />
         <div>
-          {{ person.city?.name }}, {{ person.city?.province?.name }}, {{ person.city?.province?.country?.name }}
+          <div class="info-title">Mis datos personales</div>
+          <div>{{ person.name }} - {{ person.birthDate | date:'dd/MM/yyyy' }}</div>
         </div>
       </div>
-    </div>
 
-    <div class="info-section">
-      <img src="assets/mail.png" class="icon-info" alt="Mail" />
-      <div>
-        <div class="info-title">Correo electrónico</div>
-        <div>{{ person.email }}</div>
+      <div class="info-section">
+        <img src="assets/location.png" class="icon-info" alt="Ciudad" />
+        <div>
+          <div class="info-title">Ciudad</div>
+          <div>
+            {{ person.city?.name }}, {{ person.city?.province?.name }}, {{ person.city?.province?.country?.name }}
+          </div>
+        </div>
       </div>
-    </div>
 
-    <img src="assets/logo_barbie.png" class="logo-barbie" alt="Logo" />
+      <div class="info-section">
+        <img src="assets/mail.png" class="icon-info" alt="Mail" />
+        <div>
+          <div class="info-title">Correo electrónico</div>
+          <div>{{ person.email }}</div>
+        </div>
+      </div>
+
+      <img src="assets/logo_barbie.png" class="logo-barbie" alt="Logo" />
+    </div>
   </div>
 </div>

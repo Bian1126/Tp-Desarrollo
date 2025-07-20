@@ -94,12 +94,7 @@ let UsersService = class UsersService {
                 if (!userRole) {
                     userRole = roleRepo.create({ name: 'user' });
                     userRole.permissions = [];
-                    const permissions = [
-                        'ver_personas', 'ver_persona', 'crear_persona',
-                        'ver_ciudades', 'ver_ciudad',
-                        'ver_provincias', 'ver_provincia',
-                        'ver_paises', 'ver_pais'
-                    ];
+                    const permissions = ['ver_personas'];
                     for (const permName of permissions) {
                         let perm = await permissionRepo.findOne({ where: { name: permName } });
                         if (!perm) {
@@ -154,6 +149,24 @@ let UsersService = class UsersService {
         const permsArray = Array.from(permissions);
         console.log('Permisos encontrados:', permsArray);
         return permsArray;
+    }
+    async deleteByEmail(email) {
+        const user = await this.userRepo.findOneBy({ email });
+        if (!user)
+            throw new common_1.HttpException('Usuario no encontrado', 404);
+        await this.userRepo.remove(user);
+        return { status: 'deleted' };
+    }
+    async updateByEmail(email, data) {
+        const user = await this.userRepo.findOneBy({ email });
+        if (!user)
+            throw new common_1.HttpException('Usuario no encontrado', 404);
+        if (data.email)
+            user.email = data.email;
+        if (data.password)
+            user.password = (0, bcrypt_1.hashSync)(data.password, 10);
+        await this.userRepo.save(user);
+        return { status: 'updated' };
     }
 };
 exports.UsersService = UsersService;

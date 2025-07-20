@@ -23,7 +23,7 @@ import { ProvinceService } from './province/province.service';
       port: 5433,
       username: 'postgres',
       password: 'bp21012021',
-      database: 'mybd_desarrollo_bian_persona',
+      database: 'mybd_persona',
       entities,
       synchronize: true,
     }),

@@ -2,28 +2,38 @@
   <img src="assets/fondo_registrar_persona.png" class="bg-image" alt="Fondo decorativo" />
 
   <div class="form-wrapper">
-    <h2 class="titulo-form">Agregar persona</h2>
-    <button class="btn-volver" (click)="volver()">
-      <img src="assets/volver.png" alt="Volver" />
-    </button>
+    <div class="header-from d-flex align-items-center mb-3 w-100">
+      <button class="btn btn-light btn-volver me-2" (click)="volver()" type="button">
+        <img src="assets/volver.png" alt="Volver" />
+      </button>
+      <h2 class="titulo-form mb-0">Agregar persona</h2>
+    </div>
+
     <form (ngSubmit)="agregarPersona()">
-      <label>Nombre</label>
-      <input type="text" [(ngModel)]="nombre" name="nombre" required />
+      <div class="mb-2">
+        <label class="form-label">Nombre</label>
+        <input type="text" [(ngModel)]="nombre" name="nombre" class="form-control" required />
+      </div>
 
-      <label>Correo electrónico</label>
-      <input type="email" [(ngModel)]="email" name="email" required />
+      <div class="mb-2">
+        <label class="form-label">Correo electrónico</label>
+        <input type="email" [(ngModel)]="email" name="email" class="form-control" required />
+      </div>
 
-      <label>Fecha de nacimiento</label>
-      <input type="text" [(ngModel)]="fechaNacimiento" name="fechaNacimiento" placeholder="DD/MM/AAAA" required />
+      <div class="mb-2">
+        <label class="form-label">Fecha de nacimiento</label>
+        <input type="text" [(ngModel)]="fechaNacimiento" name="fechaNacimiento" placeholder="DD/MM/AAAA" class="form-control" required />
+      </div>
 
-      <label>Ciudad</label>
-      <select [(ngModel)]="city" name="ciudad" required>
-        <option value="" disabled selected>Seleccioná una ciudad</option>
-        <option *ngFor="let c of ciudadesCordoba" [value]="c.id">{{ c.name }}</option>
-      </select>
-
-      <div *ngIf="error" class="error-msg">{{ error }}</div>
-      <button type="submit" class="btn-form">Agregar persona</button>
+      <div class="mb-2">
+        <label class="form-label">Ciudad</label>
+        <select [(ngModel)]="city" name="ciudad" class="form-select" required>
+          <option value="" disabled selected>Seleccioná una ciudad</option>
+          <option *ngFor="let c of ciudadesCordoba" [value]="c.id">{{ c.name }}</option>
+        </select>
+      </div>
+      <div *ngIf="error" class="alert alert-danger text-center error-msg">{{ error }}</div>
+      <button type="submit" class="btn btn-primary btn-form w-100">Agregar persona</button>
     </form>
   </div>
 </div>

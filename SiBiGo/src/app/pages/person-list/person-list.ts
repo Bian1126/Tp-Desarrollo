@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
+import { Person } from '../../services/person'; 
 import { CommonModule } from '@angular/common';
 
 
@@ -16,15 +17,33 @@ export class PersonListComponent implements OnInit {
   error: string = '';
   showModal: boolean = false;
   personaAEliminar: any = null;
+  permisos: string[] = [];
 
   // NUEVAS VARIABLES PARA PAGINACIÓN
   paginaActual: number = 0;
   elementosPorPagina: number = 4;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private personService: Person) {}
 
   async ngOnInit() {
     await this.cargarPersonas();
+    await this.cargarPermisos();
+  }
+
+  async cargarPermisos() {
+    try {
+      const token = localStorage.getItem('token');
+      const resp = await axios.get('http://localhost:3000/my-permissions', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      this.permisos = Array.isArray(resp.data) ? resp.data : resp.data.permissions;
+    } catch (e) {
+      this.permisos = [];
+    }
+  }
+
+  tienePermiso(permiso: string): boolean {
+    return this.permisos.includes(permiso);
   }
 
   async cargarPersonas() {
@@ -67,13 +86,15 @@ export class PersonListComponent implements OnInit {
 
   async eliminarPersona() {
     if (!this.personaAEliminar) return;
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('No estás autenticado');
+      this.router.navigate(['/login']);
+      return;
+    }
     try {
-      const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:3001/person/${this.personaAEliminar.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      // Usamos el service person.ts para eliminar en ambos sistemas
+      await this.personService.delete(this.personaAEliminar.id, token, this.personaAEliminar.email);
       this.showModal = false;
       this.personaAEliminar = null;
       alert('¡Persona eliminada exitosamente!');

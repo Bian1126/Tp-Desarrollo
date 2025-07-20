@@ -26,25 +26,25 @@
 /* Contenedor del formulario */
 .form-wrapper {
   position: relative;
-  z-index: 2; /* Sobre la imagen */
-  background: #d81b76;
-  padding: 24px 28px;
+  z-index: 2;
+  background: #d32881;
+  padding: 24px 32px;
   border-radius: 24px;
   width: 100%;
-  max-width: 440px;
-  box-shadow: 0 4px 24px #0002;
+  max-width: 600px; /* Ancho y maximo del recuadro */
+  box-shadow: 0 4px 24px; /* Sombra */
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-height: 600px; /* Limita la altura */
-  overflow-y: auto;
-  margin-right: 240px; /* Margen derecho para separarlo del borde */
+  margin-right: 400px;
+  min-height: 100vh; /* Asegura que el formulario ocupe toda la altura */
+  justify-content: center; /* Centra el contenido verticalmente */
 }
 
 /* Título */
 .titulo-form {
   color: #fff;
-  font-size: 1.8rem;
+  font-size: 2.5rem; /* Tamaño del título */
   font-weight: bold;
   text-align: center;
   margin-bottom: 12px;
@@ -70,25 +70,29 @@ label {
   font-weight: bold;
   color: #fff;
   margin: 6px 0 4px;
-  font-size: 0.9rem;
+  font-size: 1.3rem; /* Tamaño de las etiquetas */
 }
 
 /* Inputs y selects */
 input,
-select {
+select,
+.form-control,
+.form-select {
   width: 100%;
-  padding: 10px 14px;
-  border-radius: 14px;
+  padding: 10px 14px;      /* Menos padding para que entren más campos */
+  border-radius: 16px;
   border: none;
-  font-size: 15px;
+  font-size: 1rem; /* Tamaño de fuente */
   font-family: inherit;
-  margin-bottom: 8px;
+  margin-bottom: 12px;      /* Menos espacio entre campos */
   box-shadow: 0 2px 6px #0001;
   color: #e94fa2;
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
 input::placeholder {
   color: #aaa;
+  font-size: 1.1rem; /* Tamaño del placeholder */
 }
 
 /* Botón de acción */
@@ -97,8 +101,8 @@ input::placeholder {
   color: #fff;
   border: none;
   border-radius: 14px;
-  padding: 10px 28px;
-  font-size: 16px;
+  padding: 10px 28px; /* más alto */
+  font-size: 1.2rem; /* Tamaño letra */
   font-weight: bold;
   margin-top: 14px;
   cursor: pointer;
@@ -114,18 +118,18 @@ input::placeholder {
 /* Mensaje de error */
 .error-msg {
   color: #fff;
-  background: #d800ff88;
+  background: #000000;
   border-radius: 10px;
   padding: 6px 12px;
   margin-top: 10px;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   text-align: center;
 }
 
 /* Texto debajo del botón */
 .texto-secundario {
   color: #fff;
-  font-size: 0.95rem;
+  font-size: 1.5rem;
   margin-top: 16px;
   text-align: center;
 }
@@ -136,4 +140,24 @@ input::placeholder {
   font-weight: bold;
   margin-left: 6px;
   cursor: pointer;
+  font-size: 1.2rem; /* AUMENTA el tamaño de letra */
+}
+
+.form-wrapper form {
+  width: 100%;
+  max-width: 100%; /* Más largo que antes */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+input,
+select,
+.btn-form {
+  width: 100%;
+  min-width: 0;
+  font-size: 1.2rem; /* Tamaño de fuente más grande */
+  padding: 12px 16px;
+  box-sizing: border-box;
 }

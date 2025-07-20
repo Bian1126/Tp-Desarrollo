@@ -71,7 +71,7 @@ export class AddPerson implements OnInit {
         name: this.nombre,
         email: this.email,
         birthDate: birthDate, // ✅ usar el formato correcto
-        city: { id: Number(this.city) }
+        city: { id: Number(this.city) },
       };
 
 

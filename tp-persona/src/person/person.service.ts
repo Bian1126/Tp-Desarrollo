@@ -3,19 +3,22 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Person } from '../entities/person';
 import { Repository } from 'typeorm';
 import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginate';
+import axios from 'axios';
+import { City } from '../entities/city';
 
 @Injectable()
 export class PersonService {
-  async findAllPublic(): Promise<Person[]> {
-    return this.repo.find({
-      relations: ['city', 'city.province', 'city.province.country'],});
-}
-
-
   constructor(
     @InjectRepository(Person)
     private readonly repo: Repository<Person>,
   ) {}
+  
+  async findAllPublic(): Promise<Person[]> {
+    return this.repo.find({
+      relations: ['city', 'city.province', 'city.province.country'],
+    });
+  }
+
 
   paginate(options: IPaginationOptions): Promise<Pagination<Person>> {
     return paginate<Person>(
@@ -39,6 +42,7 @@ export class PersonService {
       relations: ['city', 'city.province', 'city.province.country'],
     });
     if (!person) return null;
+    
     return {
       id: person.id,
       name: person.name, // Asegúrate de tener el campo 'name' en la entidad
@@ -59,15 +63,54 @@ export class PersonService {
     };
   }
 
-  async create(data: Partial<Person>) {
+  async create(data: Partial<Person> & { password?: string }) {
+    if (data.password) {
+      try {
+        await axios.post('http://localhost:3000/register', {
+          email: data.email,
+          password: data.password,
+        });
+      } catch (error: any) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message &&
+          error.response.data.message.includes('already exists')
+        ) {
+          throw new Error('El email ya está registrado como usuario');
+        }
+        throw new Error('Error al registrar usuario: ' + error.message);
+      }
+      delete data.password;
+    }
     const person = await this.repo.save(this.repo.create(data));
     return this.findOne(person.id);
   }
 
   async update(id: number, data: Partial<Person>) {
-    const entity = await this.repo.findOne({ where: { id } });
+    const entity = await this.repo.findOne({ where: { id }, relations: ['city'] });
     if (!entity) return null;
-    await this.repo.save({ ...entity, ...data });
+    
+    // Si viene cityId, buscar la ciudad y asignarla
+    if ('cityId' in data) {
+      const cityRepo = this.repo.manager.getRepository(City);
+      const cityId = Number(data.cityId);
+      if (!isNaN(cityId)) {
+        const nuevaCiudad = await cityRepo.findOne({ where: { id: cityId } });
+        if (nuevaCiudad) {
+          entity.city = nuevaCiudad;
+        }
+      }
+      delete data.cityId;
+    }
+    // no usar password
+    if ('password' in data) {
+      delete data.password;
+    }
+
+    Object.assign(entity, data);
+
+    await this.repo.save(entity);
     return this.findOne(id);
   }
 

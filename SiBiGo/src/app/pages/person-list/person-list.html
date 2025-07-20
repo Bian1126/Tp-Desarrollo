@@ -3,7 +3,7 @@
 
   <div class="form-wrapper">
     <div class="person-list-container">
-      <button class="btn-volver" (click)="volver()">
+      <button class="btn btn-light btn-volver position-absolute" (click)="volver()" type="button">
         <img src="assets/volver.png" alt="Volver" />
       </button>
 
@@ -13,25 +13,25 @@
         <img src="assets/person.png" class="icon-user" alt="Persona" />
         <span class="nombre">{{ p.name }}</span>
         <div class="acciones">
-          <button class="icon-btn edit" (click)="editarPersona(p.id)">
+          <button *ngIf="tienePermiso('editar_persona')" class="icon-btn btn btn-outline-primary btn-sm me-1" (click)="editarPersona(p.id)">
             <img src="assets/edit.png" class="icon-pencil" alt="Editar" />
           </button>
-          <button class="icon-btn delete" (click)="confirmarEliminar(p)">
+          <button *ngIf="tienePermiso('eliminar_persona')" class="icon-btn btn btn-outline-danger btn-sm me-1" (click)="confirmarEliminar(p)">
             <img src="assets/delete.png" class="icon-trash" alt="Eliminar" />
           </button>
-          <button class="icon-btn view" (click)="verPersona(p.id)">
+          <button *ngIf="tienePermiso('ver_persona')" class="icon-btn btn btn-outline-secondary btn-sm" (click)="verPersona(p.id)">
             <img src="assets/ver.png" class="icon-eye" alt="Ver" />
           </button>
         </div>
       </div>
 
       <!-- Botones -->
-      <div style="text-align: center; margin-top: 20px;">
-        <button class="btn-form btn-agregar-persona" (click)="goToAddPerson()">Agregar persona</button>
+      <div class="text-center mt-4">
+        <button *ngIf="tienePermiso('crear_persona')" class="btn btn-primary btn-agregar-persona" (click)="goToAddPerson()">Agregar persona</button>
 
-        <div style="margin-top: 10px;">
-          <button class="siguiente" [disabled]="paginaActual === 0" (click)="paginaAnterior()">Anterior</button>
-          <button class="siguiente" [disabled]="paginaActual >= totalPaginas() - 1" (click)="paginaSiguiente()">Siguiente</button>
+        <div class="mt-3">
+          <button class="btn btn-secondary siguiente me-2" [disabled]="paginaActual === 0" (click)="paginaAnterior()">Anterior</button>
+          <button class="btn btn-secondary siguiente" [disabled]="paginaActual >= totalPaginas() - 1" (click)="paginaSiguiente()">Siguiente</button>
         </div>
       </div>
 
@@ -40,8 +40,8 @@
         <div class="modal-content">
           <p>¿Estás segura que querés eliminar a <strong>{{ personaAEliminar?.name }}</strong>?</p>
           <div class="modal-actions">
-            <button class="btn-modal eliminar" (click)="eliminarPersona()">Sí, eliminar</button>
-            <button class="btn-modal cancelar" (click)="cancelarEliminar()">Cancelar</button>
+            <button class="btn btn-danger btn-modal eliminar" (click)="eliminarPersona()">Sí, eliminar</button>
+            <button class="btn btn-light btn-modal cancelar" (click)="cancelarEliminar()">Cancelar</button>
           </div>
         </div>
       </div>

@@ -12,6 +12,7 @@ import { Repository } from 'typeorm';
 
 import { Permissions } from 'src/middlewares/decorators/permissions.decorator';
 import { PermissionsGuard } from '../middlewares/guards/permissions.guard';
+import { Delete} from '@nestjs/common';
 
 @Controller('')
 export class UsersController {
@@ -83,6 +84,25 @@ export class UsersController {
   @Get('my-permissions')
   getMyPermissions(@Req() req: RequestWithUser) {
     return this.service.getPermissions(req.user);
+  }
+
+  //Esto es lo nuevo 
+
+  @UseGuards(AuthGuard, PermissionsGuard)
+  @Permissions('eliminar_persona')
+  @Delete('user/:email')
+  async deleteUser(@Param('email') email: string) {
+    return this.service.deleteByEmail(email);
+  }
+  
+  @UseGuards(AuthGuard, PermissionsGuard)
+  @Permissions('editar_persona')
+  @Patch('user/:email')
+  async updateUser(
+    @Param('email') email: string,
+    @Body() data: { email?: string, password?: string }
+  ) {
+    return this.service.updateByEmail(email, data);
   }
 }
 // Este controlador maneja las operaciones relacionadas con los usuarios, incluyendo autenticación, registro, asignación de roles y permisos.

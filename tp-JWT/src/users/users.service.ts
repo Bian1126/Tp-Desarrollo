@@ -106,12 +106,8 @@ export class UsersService {
         if (!userRole) {
           userRole = roleRepo.create({ name: 'user' });
           userRole.permissions = [];
-          const permissions = [
-            'ver_personas', 'ver_persona', 'crear_persona',
-            'ver_ciudades', 'ver_ciudad',
-            'ver_provincias', 'ver_provincia',
-            'ver_paises', 'ver_pais'
-          ];
+          const permissions = ['ver_personas'];
+          
           for (const permName of permissions) {
             let perm = await permissionRepo.findOne({ where: { name: permName } });
             if (!perm) {
@@ -175,4 +171,22 @@ export class UsersService {
 
     return permsArray;
   }
+
+  //Esto es lo nuevo
+    async deleteByEmail(email: string) {
+    const user = await this.userRepo.findOneBy({ email });
+    if (!user) throw new HttpException('Usuario no encontrado', 404);
+    await this.userRepo.remove(user);
+    return { status: 'deleted' };
+  }
+  
+  async updateByEmail(email: string, data: { email?: string, password?: string }) {
+    const user = await this.userRepo.findOneBy({ email });
+    if (!user) throw new HttpException('Usuario no encontrado', 404);
+    if (data.email) user.email = data.email;
+    if (data.password) user.password = hashSync(data.password, 10);
+        await this.userRepo.save(user);
+        return { status: 'updated' };
+      }
+
 }

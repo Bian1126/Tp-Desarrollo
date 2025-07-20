@@ -10,4 +10,10 @@ export class AuthService {
     });
     return response.data;
   }
+  async registerUser(payload: { email: string; password: string }) {
+    return await axios.post('http://localhost:3000/register', payload);
+  }
 }
+
+
+

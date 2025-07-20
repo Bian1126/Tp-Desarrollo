@@ -3,29 +3,37 @@
 
   <div class="modificar-container">
     <div class="header">
-      <button class="btn-volver" (click)="volver()">
-        <img src="assets/volver.png" alt="Volver" />
+      <button class="btn btn-light btn-volver position-absolute" (click)="volver()" type="button" style="left:24px;top:24px;">
+        <img src="assets/volver.png" alt="Volver" style="width:28px;height:28px;" />
       </button>
-      <h2>Modificar datos de la persona</h2>
+      <h2 class="text-center w-100 mb-0">Modificar datos de la persona</h2>
     </div>
     <div class="contenido">
       <form (ngSubmit)="guardar()">
-        <label>¿Cómo te llamas?</label>
-        <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Nombre" required />
+        <div class="mb-3">
+          <label class="form-label">¿Cómo te llamas?</label>
+          <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Nombre" class="form-control" required />
+        </div>
 
-        <label>¿Cuándo naciste?</label>
-        <input type="text" [(ngModel)]="fechaNacimiento" name="fechaNacimiento" placeholder="DD/MM/AAAA" required />
+        <div class="mb-3">
+          <label class="form-label">¿Cuándo naciste?</label>
+          <input type="text" [(ngModel)]="fechaNacimiento" name="fechaNacimiento" placeholder="DD/MM/AAAA" class="form-control" required />
+        </div>
 
-        <label>¿Cual es tu correo electrónico?</label>
-        <input type="email" [(ngModel)]="email" name="email" placeholder="Correo electrónico" required />
+        <div class="mb-3">
+          <label class="form-label">¿Cual es tu correo electrónico?</label>
+          <input type="email" [(ngModel)]="email" name="email" placeholder="Correo electrónico" class="form-control" required />
+        </div>
 
-        <label>Ciudad:</label>
-        <select [(ngModel)]="ciudadSeleccionada" name="ciudad" required>
-          <option value="" disabled selected>Seleccioná una ciudad</option>
-          <option *ngFor="let c of ciudadesCordoba" [value]="c.id">{{ c.name }}</option>
-        </select>
+        <div class="mb-3">
+          <label class="form-label">Ciudad:</label>
+          <select [(ngModel)]="ciudadSeleccionada" name="ciudad" class="form-select" required>
+            <option value="" disabled selected>Seleccioná una ciudad</option>
+            <option *ngFor="let c of ciudadesCordoba" [value]="c.id">{{ c.name }}</option>
+          </select>
+        </div>
 
-        <button class="btn-form" type="submit">Guardar datos</button>
+        <button class="btn btn-primary w-100" type="submit">Guardar datos</button>
       </form>
       <img src="assets/logo_barbie.png" class="logo-barbie" alt="Logo" />
     </div>

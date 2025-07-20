@@ -20,6 +20,7 @@ export class RegisterPerson implements OnInit {
   email: string = '';
   fechaNacimiento: string = '';
   city: string = '';
+  password: string = '';
   error: string = '';
   ciudadesCordoba: any[] = [];
 
@@ -44,7 +45,7 @@ export class RegisterPerson implements OnInit {
   }
 
   async registrar() {
-    if (!this.nombre || !this.email || !this.fechaNacimiento || !this.city) {
+    if (!this.nombre || !this.email || !this.fechaNacimiento || !this.city || !this.password) {
       this.error = 'Completá todos los campos';
       return;
     }
@@ -68,8 +69,10 @@ export class RegisterPerson implements OnInit {
         name: this.nombre,
         email: this.email,
         birthDate,
-        city: { id: Number(this.city) }
+        city: { id: Number(this.city) },
+        password: this.password
       };
+      
 
       await this.personService.registerPublic(payload);
       

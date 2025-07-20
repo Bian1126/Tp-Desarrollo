@@ -18,6 +18,7 @@ export class EditPerson implements OnInit {
 
   nombre: string = '';
   email: string = '';
+  emailOriginal: string = '';
   fechaNacimiento: string = '';
   error: string = '';
   ciudadesCordoba: any[] = [];
@@ -42,6 +43,7 @@ export class EditPerson implements OnInit {
       const persona = await this.personService.getPerson(this.idPersona, token!);
       this.nombre = persona.name;
       this.email = persona.email;
+      this.emailOriginal = persona.email; // Guardar email original para comparar
       this.fechaNacimiento = persona.birthDate;
       this.ciudadSeleccionada = persona.city.id;
 
@@ -55,22 +57,39 @@ export class EditPerson implements OnInit {
   }
 
   async guardar() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.error = 'No estás autenticado';
+      this.router.navigate(['/login']);
+      return;
+    }
     try {
-      const token = localStorage.getItem('token');
+      // Actualizar en tp-persona
       await this.personService.updatePerson(
         this.idPersona,
         {
           name: this.nombre,
           email: this.email,
           birthDate: this.fechaNacimiento,
-          cityId: this.ciudadSeleccionada
+          cityId: Number(this.ciudadSeleccionada)
         },
         token!
       );
-      this.router.navigate(['/personal-info']);
-    } catch (e) {
-      console.error('Error al guardar:', e);
-      this.error = 'Error al guardar datos';
+
+      // Si el email cambió, actualizar en tp-JWT
+      if (this.email !== this.emailOriginal) {
+        await this.personService.updateUserJWT(this.emailOriginal, { email: this.email }, token!);
+      }
+
+      this.error = 'Datos guardados correctamente';
+      this.router.navigate(['/personal-list']);
+    } catch (e: any) {
+      if (e.response && (e.response.status === 401 || e.response.status === 403)) {
+        this.error = 'Sesión expirada o permisos insuficientes';
+        this.router.navigate(['/login']);
+      } else {
+        this.error = 'Error al guardar datos';
+      }
     }
   }
 }

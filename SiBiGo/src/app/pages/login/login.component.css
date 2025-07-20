@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background-color: #e993bf; /* color base del fondo */
+  background-color: #e993bf;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,7 +10,6 @@
   font-family: 'Montserrat', Arial, sans-serif;
 }
 
-/* Imagen de fondo decorativa */
 .bg-image {
   position: absolute;
   width: 95%;
@@ -23,40 +22,41 @@
   pointer-events: none;
 }
 
-/* Formulario flotando arriba del fondo */
 .form-wrapper {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 500px;
-  padding: 2rem;
+  max-width: 650px;
+  padding: 3.5rem 3rem;
 }
 
 .login-form {
   background: #e94fa2;
   border-radius: 24px;
-  padding: 32px 48px;
+  padding: 56px 72px;
   box-shadow: 0 4px 24px #0002;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  font-size: 1.3rem;
 }
 
 .titulo-form {
   color: #fff;
-  font-size: 2.2rem;
+  font-size: 3rem;
   font-weight: bold;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.input-form {
+/* Personaliza los campos solo si no tienen form-control */
+.input-form:not(.form-control) {
   width: 100%;
-  padding: 14px 18px;
-  margin-bottom: 18px;
-  border-radius: 20px;
+  padding: 18px 22px;
+  margin-bottom: 22px;
+  border-radius: 16px;
   border: none;
-  font-size: 18px;
+  font-size: 23px;
   background: #fff;
   color: #e94fa2;
   font-family: inherit;
@@ -66,15 +66,17 @@
 .input-form::placeholder {
   color: #e94fa2;
   opacity: 0.7;
+  font-size: 25px;
 }
 
-.btn-form {
-  background: #e94fa2;
+/* Botón principal sobrescribiendo Bootstrap */
+.btn-form.btn-primary {
+  background: #f7b8d3;
   color: #fff;
   border: none;
-  border-radius: 20px;
-  padding: 16px 48px;
-  font-size: 20px;
+  border-radius: 16px;
+  padding: 12px 0;
+  font-size: 25px;
   font-weight: bold;
   margin-top: 12px;
   cursor: pointer;
@@ -82,19 +84,21 @@
   transition: background 0.2s;
   box-shadow: 0 3px 10px #0003;
 }
-
-.btn-form:hover:enabled {
+.btn-form.btn-primary:hover:enabled {
   background: #d94f97;
 }
 
-.error-msg {
+.alert-danger {
   color: #d800ff;
-  margin-bottom: 0.5rem;
+  background: #ffd6fa;
+  border-radius: 10px;
+  font-weight: bold;
+  border: none;
 }
 
 .texto-secundario {
   color: #fff;
-  font-size: 1rem;
+  font-size: 1.5rem;
   margin-top: 1.5rem;
   text-align: center;
 }
@@ -106,27 +110,17 @@
   margin-left: 0.5rem;
 }
 
-/* Responsive */
 @media (max-width: 900px) {
   .form-wrapper {
-    padding: 1rem;
+    max-width: 600px;
+    padding: 2.5rem;
   }
-
   .login-form {
-    padding: 24px;
+    padding: 48px 64px;
+    font-size: 1.2rem;
   }
 }
-.logo-superior {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.logo-img {
-  max-width: 160px;
-  height: auto;
-}
-
-/* Eliminá o comentá este bloque si ya no usás side-logo */
-.side-logo {
-  display: none;
+.input-form,
+.input-form.form-control {
+  font-size: 23px !important; /* Ajustá el tamaño según lo que te guste */
 }

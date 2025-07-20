@@ -19,7 +19,6 @@ import { Permissions } from '../middlewares/decorators/permissions.decorator';
 import { PermissionsGuard } from '../middlewares/guards/permissions.guard';
 
 
-
 @Controller('person')
 @UseGuards(PermissionsGuard)
 export class PersonController {
@@ -64,8 +63,6 @@ export class PersonController {
     return this.service.findAllWithRelations();
   }
 
-  
-  
   
   @Post()
   @UseGuards(PermissionsGuard)

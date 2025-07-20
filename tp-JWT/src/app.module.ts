@@ -22,7 +22,7 @@ import { Role } from './entities/role.entity';
       port: 5433,               // Puerto por defecto de Postgres
       username: 'postgres',   // Poné tu usuario de Postgres
       password: 'bp21012021',  // Poné tu contraseña
-      database: 'mybd_desarrollo_bian_persona',      // Poné el nombre de tu base de datos
+      database: 'mybd_persona',      // Poné el nombre de tu base de datos
       entities: [UserEntity, Role, Permission],
       synchronize: true,
     }),
