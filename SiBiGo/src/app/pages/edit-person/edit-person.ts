@@ -82,7 +82,7 @@ export class EditPerson implements OnInit {
       }
 
       this.error = 'Datos guardados correctamente';
-      this.router.navigate(['/personal-list']);
+      this.router.navigate(['/person-list']);
     } catch (e: any) {
       if (e.response && (e.response.status === 401 || e.response.status === 403)) {
         this.error = 'Sesión expirada o permisos insuficientes';
