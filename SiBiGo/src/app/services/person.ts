@@ -66,5 +66,14 @@ export class Person {
       { headers: { Authorization: `Bearer ${token}` } }
     );
   }
+  
+  async registerUserJWT(email: string, password: string, token: string) {
+    return await axios.post('http://localhost:3000/register', {
+      email,
+      password
+    }, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
 
 }

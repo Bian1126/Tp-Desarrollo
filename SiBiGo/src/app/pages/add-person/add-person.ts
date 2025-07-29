@@ -45,7 +45,7 @@ export class AddPerson implements OnInit {
       this.error = 'Completá todos los campos';
       return;
     }
-
+    
     try {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -67,20 +67,22 @@ export class AddPerson implements OnInit {
       const [dia, mes, anio] = partes;
       const birthDate = `${anio}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
 
-      const payload = {
-        name: this.nombre,
-        email: this.email,
-        birthDate: birthDate, // ✅ usar el formato correcto
-        city: { id: Number(this.city) },
-      };
-
-
-      await this.personService.agregarPersona(payload, token);
-
-      this.router.navigate(['/person-list']);
-    } catch (e: any) {
-      console.error(e);
-      this.error = 'Error al agregar persona';
-    }
+        // 1. Registrar usuario en tp-JWT con contraseña por defecto
+        await this.personService.registerUserJWT(this.email, '123456', token);
+          
+          // 2. Registrar persona en tp-persona
+          const payload = {
+            name: this.nombre,
+            email: this.email,
+            birthDate: birthDate,
+            city: { id: Number(this.city) },
+          };
+          await this.personService.agregarPersona(payload, token);
+          this.router.navigate(['/person-list']);
+        } catch (e: any) {
+          console.error(e);
+          this.error = 'Error al agregar persona';
+        }
+      }
   }
-}
+    
