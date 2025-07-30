@@ -30,6 +30,34 @@
   padding: 3.5rem 3rem;
 }
 
+.input-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input {
+  flex: 1;
+  padding-right: 45px;
+  border-radius: 32px;
+}
+
+.btn-ojito {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.btn-ojito img {
+  width: 22px;
+  height: 22px;
+}
+
+
 .login-form {
   background: #e94fa2;
   border-radius: 24px;
@@ -49,48 +77,46 @@
   margin-bottom: 32px;
 }
 
-/* Personaliza los campos solo si no tienen form-control */
-.input-form:not(.form-control) {
-  width: 100%;
-  padding: 18px 22px;
-  margin-bottom: 22px;
-  border-radius: 16px;
+.input-form,
+.input-form.form-control {
+  font-size: 23px !important;
+  padding: 5px 14px;
+  border-radius: 19px !important; /* Más redondeado */
   border: none;
-  font-size: 23px;
-  background: #fff;
-  color: #e94fa2;
-  font-family: inherit;
-  box-shadow: 0 2px 6px #0001;
+  background: #ffd7ec8c;
+  color: #fff;
 }
 
 .input-form::placeholder {
-  color: #e94fa2;
-  opacity: 0.7;
-  font-size: 25px;
+  color: #ffffff;
+  opacity: 0.9;
+  font-size: 22px;
 }
+
 
 /* Botón principal sobrescribiendo Bootstrap */
 .btn-form.btn-primary {
-  background: #f7b8d3;
+  background: #f60f86;
   color: #fff;
   border: none;
-  border-radius: 16px;
-  padding: 12px 0;
-  font-size: 25px;
+  border-radius: 30px;
+  padding: 10px 0;
+  font-size: 20px;
   font-weight: bold;
   margin-top: 12px;
   cursor: pointer;
-  width: 100%;
+  width: 60%;
   transition: background 0.2s;
   box-shadow: 0 3px 10px #0003;
 }
+
 .btn-form.btn-primary:hover:enabled {
-  background: #d94f97;
+  background: #f60f8653;
 }
 
 .alert-danger {
-  color: #d800ff;
-  background: #ffd6fa;
+  color: #000000;
+  background: rgba(0, 0, 0, 0);
   border-radius: 10px;
   font-weight: bold;
   border: none;

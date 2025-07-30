@@ -17,6 +17,7 @@ export class LoginComponent {
 
   email: string = '';
   password: string = '';
+  showPassword: boolean = false; // variable para mostrar/ocultar contraseña
   error: string = '';
 
   constructor(private authService: AuthService) {}

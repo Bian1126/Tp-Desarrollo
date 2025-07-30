@@ -39,16 +39,42 @@
         </select>
       </div>
 
-      <div class="mb-2">
+      <!-- Visibilidad de la contraseña -->
+      <div class="mb-2 position-relative">
         <label class="form-label">Contraseña</label>
         <input
-          type="password"
+          [type]="showPassword ? 'text' : 'password'"
           [(ngModel)]="password"
           name="password"
           class="form-control input-sm"
           required
           autocomplete="new-password"
+          />
+          <button type="button"
+          class="btn btn-link btn-sm btn-ojito"
+          (click)="showPassword = !showPassword"
+          tabindex="-1">
+          <img [src]="showPassword ? 'assets/ver.png' : 'assets/noVer.png'" alt="Ver/Ocultar" />
+          </button>
+      </div>
+
+      <!-- Confirmación de la contraseña -->
+      <div class="mb-2 position-relative">
+        <label class="form-label">Confirmar contraseña</label>
+        <input
+          [type]="showConfirmPassword ? 'text' : 'password'"
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          class="form-control input-sm"
+          required
+          autocomplete="new-password"
         />
+        <button type="button"
+          class="btn btn-link btn-sm btn-ojito"
+          (click)="showConfirmPassword = !showConfirmPassword"
+          tabindex="-1">
+          <img [src]="showConfirmPassword ? 'assets/ver.png' : 'assets/noVer.png'" alt="Ver/Ocultar" />
+        </button>
       </div>
 
       <div *ngIf="error" class="alert alert-danger text-center error-msg">{{ error }}</div>

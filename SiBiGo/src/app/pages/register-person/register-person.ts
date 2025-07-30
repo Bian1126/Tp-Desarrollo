@@ -21,6 +21,9 @@ export class RegisterPerson implements OnInit {
   fechaNacimiento: string = '';
   city: string = '';
   password: string = '';
+  confirmPassword: string = ''; // variable para confirmar contraseña
+  showPassword: boolean = false; // variable para mostrar/ocultar contraseña
+  showConfirmPassword: boolean = false; // variable para mostrar/ocultar confirmación de contraseña
   error: string = '';
   ciudadesCordoba: any[] = [];
 
@@ -45,8 +48,12 @@ export class RegisterPerson implements OnInit {
   }
 
   async registrar() {
-    if (!this.nombre || !this.email || !this.fechaNacimiento || !this.city || !this.password) {
+    if (!this.nombre || !this.email || !this.fechaNacimiento || !this.city || !this.password || !this.confirmPassword) {
       this.error = 'Completá todos los campos';
+      return;
+    }
+    if (this.password !== this.confirmPassword) {
+      this.error = 'Las contraseñas no coinciden';
       return;
     }
 
@@ -64,7 +71,6 @@ export class RegisterPerson implements OnInit {
       
       const [dia, mes, anio] = partes;
       const birthDate = `${anio}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
-      
       const payload = {
         name: this.nombre,
         email: this.email,
@@ -72,12 +78,8 @@ export class RegisterPerson implements OnInit {
         city: { id: Number(this.city) },
         password: this.password
       };
-      
-
       await this.personService.registerPublic(payload);
-      
       this.router.navigate(['/']);
-
     } catch (e: any) {
       console.error(e);
       this.error = 'Error al registrar persona';

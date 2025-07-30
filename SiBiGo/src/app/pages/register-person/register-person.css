@@ -1,7 +1,8 @@
 /* Fondo principal */
 .main-bg {
   position: relative;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   min-height: 100vh;
   background-color: #e993bf;
   display: flex;
@@ -31,13 +32,16 @@
   padding: 24px 32px;
   border-radius: 24px;
   width: 100%;
-  max-width: 600px; /* Ancho y maximo del recuadro */
+  max-width: 660px; /* Ancho y maximo del recuadro */
   box-shadow: 0 4px 24px; /* Sombra */
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 400px;
+  margin-right: 400px; /* Espacio a la derecha */
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  max-height: 100vh; /* Evita scroll */
   min-height: 100vh; /* Asegura que el formulario ocupe toda la altura */
+  overflow: visible;
   justify-content: center; /* Centra el contenido verticalmente */
 }
 
@@ -79,15 +83,15 @@ select,
 .form-control,
 .form-select {
   width: 100%;
-  padding: 10px 14px;      /* Menos padding para que entren más campos */
-  border-radius: 16px;
+  padding: 3px 6px; /* Menos padding para que entren más campos */
+  border-radius: 19px;
   border: none;
-  font-size: 1rem; /* Tamaño de fuente */
+  font-size: 1.2rem; /* Tamaño de fuente */
   font-family: inherit;
-  margin-bottom: 12px;      /* Menos espacio entre campos */
+  margin-bottom: 6px;      /* Menos espacio entre campos */
   box-shadow: 0 2px 6px #0001;
-  color: #e94fa2;
-  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+  box-sizing: border-box;
+  background: #f7acd9; 
 }
 
 input::placeholder {
@@ -97,14 +101,14 @@ input::placeholder {
 
 /* Botón de acción */
 .btn-form {
-  background: #f7b8d3;
+  background: #f888b9;
   color: #fff;
   border: none;
-  border-radius: 14px;
+  border-radius: 19px;
   padding: 10px 28px; /* más alto */
   font-size: 1.2rem; /* Tamaño letra */
   font-weight: bold;
-  margin-top: 14px;
+  margin-top: 17px;
   cursor: pointer;
   width: 100%;
   transition: background 0.2s;
@@ -160,4 +164,30 @@ select,
   font-size: 1.2rem; /* Tamaño de fuente más grande */
   padding: 12px 16px;
   box-sizing: border-box;
+}
+
+.btn-ojito {
+  position: absolute;
+  right: 12px;
+  top: 70%; /* Ajusta la posición vertical del botón */
+  transform: translateY(-50%); /* Centra verticalmente */
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 3;
+}
+.btn-ojito img {
+  width: 20px;
+  height: 20px;
+}
+
+.form-wrapper {
+  min-width: unset;
+  height: 100vh;
+  max-height: 95vh;
+  overflow-y: auto;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  justify-content: flex-start; /* Alinea el contenido al inicio */
 }
