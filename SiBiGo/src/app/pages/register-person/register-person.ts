@@ -71,18 +71,29 @@ export class RegisterPerson implements OnInit {
       
       const [dia, mes, anio] = partes;
       const birthDate = `${anio}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
+
+      // 1. Registrar usuario en tp-JWT 
+      await this.personService.registerUserJWTPublic(this.email, this.password);
+
+
+      // 2. Registrar persona en tp-persona
       const payload = {
         name: this.nombre,
         email: this.email,
         birthDate,
-        city: { id: Number(this.city) },
-        password: this.password
+        city: { id: Number(this.city) }
       };
       await this.personService.registerPublic(payload);
-      this.router.navigate(['/']);
+
+      alert('Persona registrada con éxito');
+      this.router.navigate(['/login']);
     } catch (e: any) {
+      if (e.message.includes('already exists')) {
+        this.error = 'El correo electrónico ya está registrado.';
+      } else {
+        this.error = 'Error al registrar persona: ' + (e.message || '');
+      }
       console.error(e);
-      this.error = 'Error al registrar persona';
     }
   }
 }

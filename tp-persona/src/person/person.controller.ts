@@ -20,7 +20,6 @@ import { PermissionsGuard } from '../middlewares/guards/permissions.guard';
 
 
 @Controller('person')
-@UseGuards(PermissionsGuard)
 export class PersonController {
   constructor(private readonly service: PersonService) {}
 
@@ -77,11 +76,11 @@ export class PersonController {
   update(@Param('id') id: number, @Body() data: Partial<Person>) {
     return this.service.update(id, data);
   }
-
+  
   @Patch(':id')
   @UseGuards(PermissionsGuard)
   @Permissions('editar_persona')
-  patch(@Param('id') id: number, @Body() data: Partial<Person>) {
+  patchUpdate(@Param('id') id: number, @Body() data: Partial<Person>) {
     return this.service.update(id, data);
   }
 

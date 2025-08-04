@@ -41,7 +41,10 @@ let UsersController = class UsersController {
     login(body) {
         return this.service.login(body);
     }
-    register(body) {
+    async publicRegister(body) {
+        return this.service.register(body);
+    }
+    async register(body, req) {
         return this.service.register(body);
     }
     async canDo(request, permissions) {
@@ -93,11 +96,20 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "login", null);
 __decorate([
-    (0, common_1.Post)('register'),
+    (0, common_1.Post)('public-register'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [register_dto_1.RegisterDTO]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "publicRegister", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Post)('register'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [register_dto_1.RegisterDTO, Object]),
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "register", null);
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),

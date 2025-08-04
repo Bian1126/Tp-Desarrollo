@@ -19,7 +19,10 @@ export declare class UsersController {
         accessToken: string;
         refreshToken: string;
     }>;
-    register(body: RegisterDTO): Promise<{
+    publicRegister(body: RegisterDTO): Promise<{
+        status: string;
+    }>;
+    register(body: RegisterDTO, req: RequestWithUser): Promise<{
         status: string;
     }>;
     canDo(request: RequestWithUser, permissions: string[]): Promise<{

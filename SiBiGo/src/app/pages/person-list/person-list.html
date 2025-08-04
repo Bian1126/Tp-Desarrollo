@@ -25,7 +25,14 @@
         </div>
       </div>
 
-      <!-- Botones -->
+      <div *ngIf="showSessionExpiredModal" class="modal">
+        <div class="modal-content">
+          <h2>Sesión expirada</h2>
+          <p>Tu sesión ha expirado. Por favor, inicia sesión nuevamente.</p>
+          <button (click)="redirigirLogin()">Aceptar</button>
+        </div>
+      </div>
+      
       <div class="text-center mt-4">
         <button *ngIf="tienePermiso('crear_persona')" class="btn btn-primary btn-agregar-persona" (click)="goToAddPerson()">Agregar persona</button>
 

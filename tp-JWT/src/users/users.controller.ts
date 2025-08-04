@@ -47,8 +47,14 @@ export class UsersController {
     return this.service.login(body);
   }
 
+  @Post('public-register')
+  async publicRegister(@Body() body: RegisterDTO) {
+    return this.service.register(body);
+  }
+
+  @UseGuards(AuthGuard) 
   @Post('register')
-  register(@Body() body: RegisterDTO) {
+  async register(@Body() body: RegisterDTO, @Req() req: RequestWithUser) {
     return this.service.register(body);
   }
 

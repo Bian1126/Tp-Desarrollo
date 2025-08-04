@@ -18,6 +18,7 @@ export class PersonListComponent implements OnInit {
   showModal: boolean = false;
   personaAEliminar: any = null;
   permisos: string[] = [];
+  showSessionExpiredModal: boolean = false;
 
   // NUEVAS VARIABLES PARA PAGINACIÓN
   paginaActual: number = 0;
@@ -29,6 +30,15 @@ export class PersonListComponent implements OnInit {
     await this.cargarPersonas();
     await this.cargarPermisos();
   }
+  
+  mensajeErrorSesionExpirada(e: any): boolean {
+    if (e.response && e.response.status === 401) {
+      alert('La sesión ha expirado. Por favor, inicie sesión nuevamente.');
+      this.router.navigate(['/login']);
+      return true; 
+    }
+    return false;
+  }
 
   async cargarPermisos() {
     try {
@@ -37,7 +47,8 @@ export class PersonListComponent implements OnInit {
         headers: { Authorization: `Bearer ${token}` }
       });
       this.permisos = Array.isArray(resp.data) ? resp.data : resp.data.permissions;
-    } catch (e) {
+    } catch (e: any) {
+      this.mensajeErrorSesionExpirada(e);
       this.permisos = [];
     }
   }
@@ -58,8 +69,9 @@ export class PersonListComponent implements OnInit {
       this.persons = (response.data.items || []).sort((a: any, b: any) =>
         a.name.localeCompare(b.name)
       );
-    } catch (e) {
-      this.error = 'Error al cargar personas';
+    } catch (e: any) {
+      this.mensajeErrorSesionExpirada(e);
+      this.error = 'Error al cargar personas'; 
     }
   }
 
@@ -79,17 +91,24 @@ export class PersonListComponent implements OnInit {
     this.router.navigate(['/person-view', id]);
   }
 
-  confirmarEliminar(persona: any) {
-    this.personaAEliminar = persona;
-    this.showModal = true;
+  async confirmarEliminar(persona: any) {
+    const token = localStorage.getItem('token');
+    try {
+      await axios.get('http://localhost:3000/my-permissions', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      this.personaAEliminar = persona;
+      this.showModal = true;
+    } catch (e: any) {
+      this.mensajeErrorSesionExpirada(e);
+    }
   }
 
   async eliminarPersona() {
     if (!this.personaAEliminar) return;
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('No estás autenticado');
-      this.router.navigate(['/login']);
+      this.showSessionExpiredModal = true;
       return;
     }
     try {
@@ -99,8 +118,10 @@ export class PersonListComponent implements OnInit {
       this.personaAEliminar = null;
       alert('¡Persona eliminada exitosamente!');
       await this.cargarPersonas();
-    } catch (e) {
-      alert('Error al eliminar persona');
+    } catch (e: any) {
+      if (!this.mensajeErrorSesionExpirada(e)) {
+        alert('Error al eliminar persona');
+      }
     }
   }
 
@@ -109,7 +130,7 @@ export class PersonListComponent implements OnInit {
     this.personaAEliminar = null;
   }
 
-  // 🔽 MÉTODOS PARA PAGINACIÓN
+  // MÉTODOS PARA PAGINACIÓN
   personasPaginadas() {
     const inicio = this.paginaActual * this.elementosPorPagina;
     return this.persons.slice(inicio, inicio + this.elementosPorPagina);
@@ -119,15 +140,34 @@ export class PersonListComponent implements OnInit {
     return Math.ceil(this.persons.length / this.elementosPorPagina);
   }
 
-  paginaSiguiente() {
+  async paginaSiguiente() {
     if (this.paginaActual < this.totalPaginas() - 1) {
+      const paginaAnterior = this.paginaActual;
       this.paginaActual++;
+      try {
+        await this.cargarPersonas();
+      } catch (e: any) {
+        this.paginaActual = paginaAnterior;
+        this.mensajeErrorSesionExpirada(e);
+      }
     }
   }
 
-  paginaAnterior() {
+  async paginaAnterior() {
     if (this.paginaActual > 0) {
+      const paginaAnterior = this.paginaActual;
       this.paginaActual--;
+      try {
+        await this.cargarPersonas();
+      } catch (e: any) {
+        this.paginaActual = paginaAnterior;
+        this.mensajeErrorSesionExpirada(e);
+      }
     }
   }
+  
+  redirigirLogin() {
+    this.showSessionExpiredModal = false;
+    this.router.navigate(['/login']);
+  } 
 }

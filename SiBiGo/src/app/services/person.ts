@@ -22,7 +22,7 @@ export class Person {
   }
 
   async updatePerson(id: string, data: any, token: string) {
-    return await axios.patch(
+    return await axios.put(
       `http://localhost:3001/person/${id}`,
       data,
       { headers: { Authorization: `Bearer ${token}` } }
@@ -72,6 +72,19 @@ export class Person {
       email,
       password
     }, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+  
+  async registerUserJWTPublic(email: string, password: string) {
+    return await axios.post('http://localhost:3000/public-register', {
+      email,
+      password
+    });
+  }
+  
+  async verificarToken(token: string) {
+    return await fetch('http://localhost:3000/my-permissions', {
       headers: { Authorization: `Bearer ${token}` }
     });
   }

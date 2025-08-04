@@ -59,7 +59,7 @@ export class EditPerson implements OnInit {
   async guardar() {
     const token = localStorage.getItem('token');
     if (!token) {
-      this.error = 'No estás autenticado';
+      alert('Sesión expirada. Por favor, inicia sesión nuevamente.');
       this.router.navigate(['/login']);
       return;
     }
@@ -81,11 +81,11 @@ export class EditPerson implements OnInit {
         await this.personService.updateUserJWT(this.emailOriginal, { email: this.email }, token!);
       }
 
-      this.error = 'Datos guardados correctamente';
+      alert('Datos guardados correctamente');
       this.router.navigate(['/person-list']);
     } catch (e: any) {
       if (e.response && (e.response.status === 401 || e.response.status === 403)) {
-        this.error = 'Sesión expirada o permisos insuficientes';
+        alert('Sesión expirada. Por favor, inicia sesión nuevamente.');
         this.router.navigate(['/login']);
       } else {
         this.error = 'Error al guardar datos';

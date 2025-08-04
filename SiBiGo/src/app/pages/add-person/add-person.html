@@ -32,6 +32,15 @@
           <option *ngFor="let c of ciudadesCordoba" [value]="c.id">{{ c.name }}</option>
         </select>
       </div>
+      
+      <div *ngIf="showSessionExpiredModal" class="modal">
+        <div class="modal-content">
+          <h2>Sesión expirada</h2>
+          <p>Tu sesión ha expirado. Por favor, inicia sesión nuevamente.</p>
+          <button (click)="redirigirLogin()">Aceptar</button>
+        </div>
+      </div>
+      
       <div *ngIf="error" class="alert alert-danger text-center error-msg">{{ error }}</div>
       <button type="submit" class="btn btn-primary btn-form w-100">Agregar persona</button>
     </form>

@@ -35,8 +35,8 @@ export class LoginComponent {
     this.router.navigate(['/person-list']);
   } catch (e: any) {
     this.error = 'Email o contraseña incorrectos';
+    }
   }
-}
 
   goToRegister() {
     this.router.navigate(['/register']);
